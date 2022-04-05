@@ -1,0 +1,154 @@
+﻿@model LoginApp.Models.UserModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<head>
+    <!-- Required styles for Material Web -->
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+
+    <!-- Color Codes:
+        Gray : #5C6771
+        White : #F8F7FC
+        Red : #DA252D
+     -->
+
+    <style>
+
+        body {
+            margin: auto;
+            width: 50%;
+            background-color: #DA252D;
+        }
+
+
+        .mdc-card--outlined {
+            align-self: center;
+            margin: auto;
+            background-color: #F8F7FC;
+            height: 500px;
+            width: 70%;
+            place-items: center;
+        }
+
+        .mdc-text-field {
+            margin-top: 30px;
+            background-color: white;
+        }
+
+        .mdc-text-field__input {
+            color: #5C6771;
+            font-size: 20px;
+        }
+
+        .icon-visibility {
+            border-radius: 50%;
+            background-color: #F8F7FC;
+        }
+    </style>
+</head>
+
+
+
+<!-- Render textfield component -->
+<body>
+
+    <div class="mdc-card mdc-card--outlined">
+
+        @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <label class="mdc-text-field mdc-textfield1 mdc-text-field--outlined mdc-text-field--with-leading-icon">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="my-label-id">Kullanıcı Adı</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <i class="material-icons-outlined mdc-text-field__icon mdc-text-field__icon--leading" tabindex="0">account_circle</i>
+                <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id=@Model.Username>
+            </label>
+
+        }
+
+
+
+        <label class="mdc-text-field mdc-textfield2 mdc-text-field--outlined mdc-text-field--with-leading-icon">
+            <span class="mdc-notched-outline">
+                <span class="mdc-notched-outline__leading"></span>
+                <span class="mdc-notched-outline__notch">
+                    <span class="mdc-floating-label" id="my-label-id">Şifre</span>
+                </span>
+                <span class="mdc-notched-outline__trailing"></span>
+            </span>
+            <input class="mdc-text-field__input" type="password" aria-labelledby="my-label-id" id=@Model.Password>
+            <i class="material-icons-outlined mdc-text-field__icon icon-visibility mdc-text-field__icon--trailing" tabindex="0" role="button">visibility</i>
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </label>
+
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+        </div>
+
+</body>
+
+
+
+<h2>Login</h2>
+
+
+@* @using (Html.BeginForm())   *@
+
+@using (Html.BeginForm("Login", "Login", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>UserModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<!-- Required Material Web JavaScript library -->
+<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+<!-- Instantiate single textfield component rendered in the document -->
+<script>
+    mdc.textField.MDCTextField.attachTo(document.querySelector('.mdc-textfield1'));
+    mdc.textField.MDCTextField.attachTo(document.querySelector('.mdc-textfield2'));
+</script>
